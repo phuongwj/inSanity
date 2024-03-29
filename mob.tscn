@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=3 uid="uid://blmwa8l27fcgm"]
+
+[ext_resource type="Script" path="res://mob.gd" id="1_k3poj"]
+[ext_resource type="Texture2D" uid="uid://sbhn7x37gkoj" path="res://art/sprites/evilface1.png" id="2_a5ujc"]
+[ext_resource type="Texture2D" uid="uid://cel1lknrh3jth" path="res://art/sprites/evilface2.png" id="3_if867"]
+[ext_resource type="Texture2D" uid="uid://ndgjj8qq86cf" path="res://art/sprites/evilface3.png" id="4_dug12"]
+[ext_resource type="Texture2D" uid="uid://cou4qcw0r4pnq" path="res://art/sprites/evilface4.png" id="5_japkb"]
+[ext_resource type="AudioStream" uid="uid://fitvmrii32o0" path="res://audio/happyKill.wav" id="6_0ob1p"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3frrd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_a5ujc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_if867")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_dug12")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_japkb")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tmn3d"]
+size = Vector2(29.9999, 28.0001)
+
+[node name="Mob" type="RigidBody2D" groups=["mobs"]]
+collision_layer = 4
+collision_mask = 5
+gravity_scale = 0.0
+lock_rotation = true
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("1_k3poj")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1.76, 1.76)
+sprite_frames = SubResource("SpriteFrames_3frrd")
+animation = &"walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-7.15256e-07, -1)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_tmn3d")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+position = Vector2(-1.19209e-06, -1)
+scale = Vector2(1.4, 1.5)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_0ob1p")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="hidden" from="." to="." method="body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]

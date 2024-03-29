@@ -1,0 +1,101 @@
+[gd_scene load_steps=8 format=3 uid="uid://bwd3llwslqknk"]
+
+[ext_resource type="Script" path="res://projectile.gd" id="1_45kf8"]
+[ext_resource type="Texture2D" uid="uid://clion07crh5j" path="res://art/sprites/projectile1.png" id="2_wl60f"]
+[ext_resource type="Texture2D" uid="uid://dpgber8g75g5r" path="res://art/sprites/projectile2.png" id="3_ekder"]
+[ext_resource type="Texture2D" uid="uid://b2udhm8mx51gm" path="res://art/sprites/projectile3.png" id="4_qe0bp"]
+[ext_resource type="Texture2D" uid="uid://ry5mbn7n06cw" path="res://art/sprites/projectile4.png" id="5_a7mox"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8x1xu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_wl60f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ekder")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_qe0bp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_a7mox")
+}],
+"loop": true,
+"name": &"fly_down",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_wl60f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ekder")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_qe0bp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_a7mox")
+}],
+"loop": true,
+"name": &"fly_left",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_wl60f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ekder")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_qe0bp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_a7mox")
+}],
+"loop": true,
+"name": &"fly_right",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_wl60f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ekder")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_qe0bp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_a7mox")
+}],
+"loop": true,
+"name": &"fly_up",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yiwiw"]
+size = Vector2(22, 24)
+
+[node name="Projectile" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 4
+gravity_scale = 0.0
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("1_45kf8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = -1.5708
+sprite_frames = SubResource("SpriteFrames_8x1xu")
+animation = &"fly_up"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_yiwiw")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
